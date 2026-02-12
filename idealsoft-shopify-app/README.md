@@ -1,75 +1,40 @@
-# Nuxt Minimal Starter
+# FRONTEND APP
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Nuxt 4 product catalog UI with Tailwind CSS v4.
 
 ## Setup
 
-Make sure to install dependencies:
-
 ```bash
-# npm
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
+Open `http://localhost:3000`
 
-Build the application for production:
+> The frontend proxies GraphQL requests to the backend at `http://localhost:8000` via `server/api/graphql.post.ts` to avoid CORS issues.
 
-```bash
-# npm
-npm run build
+## Project Structure
 
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+```
+app/
+├── app.vue                    # Main page: filters, product grid, pagination
+├── components/
+│   └── ProductCard.vue        # Product card with image, price, status badge
+├── composables/
+│   └── useProducts.ts         # Data fetching, filters, pagination state
+├── graphql/
+│   └── queries.ts             # GraphQL query strings
+└── types/
+    └── product.ts             # TypeScript interfaces
+server/
+└── api/
+    └── graphql.post.ts        # Proxy to backend GraphQL API
 ```
 
-Locally preview production build:
+## Features
 
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- Search by product title
+- Filter by status (Active / Draft / Archived)
+- Filter by vendor
+- Paginated product grid
+- Responsive layout (1–4 columns)
