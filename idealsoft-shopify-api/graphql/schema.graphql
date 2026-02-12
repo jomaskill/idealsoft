@@ -1,0 +1,54 @@
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+type Product {
+    id: ID!
+    shopify_id: String!
+    title: String!
+    description: String
+    handle: String!
+    vendor: String
+    product_type: String
+    status: ProductStatus!
+    tags: [String]
+    variants: [ProductVariant]
+    images: [ProductImage]
+    published_at: DateTime
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type ProductVariant {
+    title: String
+    sku: String
+    price: String
+    compare_at_price: String
+    inventory_quantity: Int
+}
+
+type ProductImage {
+    src: String!
+    alt: String
+    position: Int
+    width: Int
+    height: Int
+}
+
+enum ProductStatus {
+    ACTIVE @enum(value: "active")
+    DRAFT @enum(value: "draft")
+    ARCHIVED @enum(value: "archived")
+}
+
+type Query {
+    products(
+        search: String @scope(name: "search")
+        status: ProductStatus @eq
+        vendor: String @eq
+    ): [Product!]! @paginate(defaultCount: 15, model: "App\\Domains\\Shopify\\Models\\Product")
+
+    product(
+        id: ID @eq
+        shopify_id: String @eq
+    ): Product @find(model: "App\\Domains\\Shopify\\Models\\Product")
+}
